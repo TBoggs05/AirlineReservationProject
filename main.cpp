@@ -15,15 +15,14 @@ using namespace std;
 int main()
 {
     char condition[2];
-     LinkedList list;
     //dud is populated to test copy constructors.
     LinkedList* dud = new LinkedList();
     Node* x = new Node();
     Node* y = new Node();
     Node* z = new Node();
-    dud.insert_node(x);
-    dud.insert_node(y);
-    dud.insert_node(z);
+    dud->insert_node(x);
+    dud->insert_node(y);
+    dud->insert_node(z);
     LinkedList list(dud); //tests copy constructor, just initialize it normally to not test that!
     do {
         int input = 0;
@@ -69,7 +68,7 @@ int main()
         }
         else if (input == 4) {
             std::cout << "overwriting list with dud..." << std::endl;
-            list.LinkedList_copy(dud.getHead());
+            list.LinkedList_copy(dud->getHead());
 
         }
         else if (input == 5) {
