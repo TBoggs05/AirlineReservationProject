@@ -11,22 +11,20 @@
 #include "LinkedList.h"
 
 using namespace std;
-/*
-TODO
--fix copyconstructor and copyfunction.
-*/
+
 int main()
 {
     char condition[2];
      LinkedList list;
     //dud is populated to test copy constructors.
-    LinkedList dud;
+    LinkedList* dud = new LinkedList();
     Node* x = new Node();
     Node* y = new Node();
     Node* z = new Node();
     dud.insert_node(x);
     dud.insert_node(y);
     dud.insert_node(z);
+    LinkedList list(dud); //tests copy constructor, just initialize it normally to not test that!
     do {
         int input = 0;
         cout << "LINKED_LIST_TEST_MENU:" << endl;
@@ -75,9 +73,7 @@ int main()
 
         }
         else if (input == 5) {
-            std::cout << "making list from dud..." << std::endl;
-            LinkedList coolList(dud);
-            list.LinkedList_copy(coolList.getHead());
+            std::cout << "THIS HAS TO BE TESTED IN SOURCE CODE BY MODIFYING CONSTRUCTOR!" << std::endl;
         }
         else if (input == 6) {
             list.print_list();
