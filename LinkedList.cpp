@@ -1,4 +1,5 @@
 #include "LinkedList.h"
+#include <string>
 
 /*
 Default Constructor:
@@ -106,7 +107,7 @@ bool LinkedList::insert_node(Node* n)
 		return true;
 	}
 }
- /*
+/*
 DELETE NODE FUNCTION
 -deletes the first instance of that node
 -(in a case where there are more than one instances of n, it will only delete the first instance after head.)
@@ -181,7 +182,7 @@ void LinkedList::print_list()
 		std::cout << "--------------------------------------------------------------------\n";
 		std::cout << "PASSENGER: " << temp->firstName << " " << temp->lastName << std::endl;
 		std::cout << "ADDRESS: " << temp->address << std::endl;
-		std::cout << "ID: " << temp->passengerID << std::endl;
+		std::cout << "Passenger_ID: " << temp->passengerID << std::endl;
 		std::cout << "RESERVATION_NUMBER: " << temp->reservationNum << std::endl;
 		std::cout << "PHONE_NUMBER: " << temp->phoneNum << std::endl;
 		std::cout << "SEAT_NUMBER: " << temp->seatNum << std::endl;
@@ -200,20 +201,74 @@ int LinkedList::list_size()
 {
 	return count;
 }
+
+/*
+CHANGE FOOD FUNCTION
+- searches through nodes to find a specific passenger via passenger ID
+- then prompts the user to enter a new menu option
+- replaces previous menu option with new one
+*/
+void LinkedList::change_Food(long ID)
+{
+	Node* curr = head;
+	std::string new_menuPref;
+
+	if (curr->passengerID == ID) {
+
+		std::cout << "\nEnter new menu preference: ";
+		std::cin >> new_menuPref;
+		curr->setMenu(new_menuPref);
+		std::cout << "\n Menu preference CHANGED!\n";
+	}
+	else {
+		std::cout << "\nPassenger NOT found\n";
+	}
+}
+
+/*
+CHANGE SEAT FUNCTION
+- searches through nodes to find a specific passenger via passengers ID
+- then prompts the user to enter a new seat number
+- replaces previous seat number with new one
+*/
+void LinkedList::change_Seat(long ID) {
+	Node* curr = head;
+	int newSeat;
+
+	if (curr->passengerID == ID) {
+		std::cout << "Enter new seat number: ";
+		std::cin >> newSeat;
+
+		// NEED TO DO: check if seat is already taken
+		if (curr->seatNum != newSeat) {
+			curr->setSeat(newSeat);
+			std::cout << "\nSeat CHANGED!\n";
+		}
+		else {
+			std::cout << "\nSeat is already taken\n";
+		}
+	}
+	else {
+		std::cout << "\nPassenger NOT found\n";
+	}
+
+}
 /*
 SEARCH FOR NODE FUNCTION
 -searches through the linked list until the node with the proper passengerID is found
 -assumes unique passengerID's for all passengers + list is already sorted alphabetically
 -NOTE: this could be used in delete to clean up logic, but keeping separate for now in case changes have to be made.
 */
-int LinkedList::search_node(long ID)
-{
+int LinkedList::search_node(long ID){
+	Node* curr;
+	curr = head;
 	int position = 1;
+
 	//if list is empty, return -1(doesnt exist)
-	if (head == NULL)
+	if (curr == NULL)
 		return -1;
 	//if head is the searched for node, return 1(head index)
-	else if (head->passengerID == ID)
+	else if (curr->passengerID == ID)
 		return 1;
 	//if it is after head, loop until end of list(node is null), and find n.
 	//each loop, update position to represent the index of the node
@@ -231,6 +286,62 @@ int LinkedList::search_node(long ID)
 			return position + 1;
 		else
 			return -1;
+	}
+
+}
+
+int LinkedList::search_node_seat(int seatN){
+    
+    Node* curr;
+	curr = head;
+	int position = 1;
+
+	//if list is empty, return -1(doesnt exist)
+	if (curr == NULL)
+		return -1;
+	//if head is the searched for node, return 1(head index)
+	else if (curr->seatNum == seatN)
+		return 1;
+	//if it is after head, loop until end of list(node is null), and find n.
+	//each loop, update position to represent the index of the node
+	//when n is found or list is at end, terminate loop and return either position+1(index) or -1(not found)
+	//just like in delete, we check for passenger ID since it is unique, and we assume the list is already sorted
+	//alphabetically.
+	else {
+		Node* temp = head->next;
+		while (temp != NULL && temp->seatNum != seatN)
+		{
+			position++;
+			temp = temp->next;
+		}
+		if (temp != NULL)
+			return position + 1;
+		else
+			return -1;
+	}
+
+}
+
+bool LinkedList::Is_ID_taken(long ID)
+{
+	bool taken = false;
+
+	if (LinkedList::search_node(ID) < 1) {
+		return taken = false;
+	}
+	else {
+		return taken = true;
+	}
+}
+
+bool LinkedList::Is_Seat_taken(int seatN) {
+		bool taken = false;
+
+	if (LinkedList::search_node_seat(seatN) < 1) {
+		return taken = false;
+	}
+	else {
+		return taken = true;
 	}
 
 }
