@@ -84,18 +84,21 @@ void Reservation::search()
 		// if there are, prompts user for passenger ID
 		cout << "\nPlease enter the Passenger's ID that you're looking for: ";
 		cin >> ID;
-		
-		// checks to see if search_node returns an integer 1
-		// stating that there was a match
-		if (obj1.search_node(ID) == 1) {
 
-			// if matched then output confirmation
-			cout << "\nPassenger with ID number: " << ID << " was found!" << endl;
-		}
-		else {
-			//if match not found then output results
-			cout << "\nPassenger with ID number: " << ID << " was NOT found." << endl;
-		}
+			// checks to see if search_node returns an integer 1
+			// stating that there was a match
+			if (obj1.search_node(ID) >= 1) {
+				long position = obj1.search_node(ID);
+
+				// if matched then output confirmation
+				cout << "\nPassenger with ID number: " << ID << " was found at position: " << position << endl;
+
+
+			}
+			else {
+				//if match not found then output results
+				cout << "\nPassenger with ID number: " << ID << " was NOT found." << endl;
+			}
 	}
 	else {
 		// There were no passengers to search for
@@ -121,15 +124,32 @@ void Reservation::insert()
 	std::cout << "Last Name: ";
 	std::cin >> lastName;
 	std::cout << "Address: ";
-	std::cin >> address;
+	std::cin.ignore();
+	std::getline(cin, address);
+
 	std::cout << "Passenger ID: ";
 	std::cin >> passengerID;
+	if (obj1.Is_ID_taken(passengerID) == true) {
+
+	    while(obj1.Is_ID_taken(passengerID) == true){
+		    std::cout << "\noops! That passenger ID is already taken, please enter an original ID. \nPassenger ID: ";
+		    std::cin >> passengerID;
+	    }
+	}
+	
 	std::cout << "Reservation Number: ";
 	std::cin >> reservationNum;
 	std::cout << "Phone Number: ";
 	std::cin >> phoneNum;
 	std::cout << "Seat Number: ";
 	std::cin >> seatNum;
+	if (obj1.Is_Seat_taken(seatNum) == true) {
+        std:: cout << "here\n";
+	    while(obj1.Is_Seat_taken(seatNum) == true){
+		    std::cout << "\noops! This seat is already taken, please enter a new seat number. \nSeat Number: ";
+		    std::cin >> seatNum;
+	    }
+	}	
 	std::cout << "Menu Preference: ";
 	std::cin >> menuPref;
 
@@ -194,6 +214,14 @@ Allowes the user to change their food option
 */
 void Reservation::changeFood()
 {
+	long ID;
+	string newPref;
+
+	cout << "\nPlease enter your Passenger ID: ";
+	cin >> ID;
+
+	obj1.change_Food(ID);
+
 
 }
 
@@ -202,10 +230,19 @@ void Reservation::changeFood()
 */
 void Reservation::changeSeat()
 {
+	long ID;
+	int newSeatNum;
+
+	cout << "\nPlease enter your Passenger ID: ";
+	cin >> ID;
+
+	obj1.change_Seat(ID);
 }
 /*
 
 */
+
+
 void Reservation::copyDatabase()
 {
 }
