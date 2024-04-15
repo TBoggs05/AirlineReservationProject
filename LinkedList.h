@@ -2,6 +2,7 @@
 #define LINKEDLIST_H_
 #include<iostream>
 #include<string>
+
 struct Node {
 	//passenger data for each passenger Node
 	std::string firstName;
@@ -36,6 +37,12 @@ struct Node {
 		menuPref = mPref;
 		next = n;
 	}
+	void setMenu(std::string mPref) {
+		menuPref = mPref;
+	}
+	void setSeat(int sNum) {
+		seatNum = sNum;
+	}
 	/*
 	-checks for alphabetical order.
 	-uses built in compare function, which uses ASCII Values.
@@ -65,7 +72,9 @@ struct Node {
 			return 0;
 		}
 	}
+
 };
+
 
 class LinkedList
 {
@@ -81,8 +90,16 @@ public:
 	bool delete_node(long);//deletes a node after finding it based on ID
 	void print_list();//prints each node's data
 	int list_size();//returns count
+	void change_Food(long);// changes food option;
+	void change_Seat(long); //changes seat number; 
 	int search_node(long);//searches for a node based on ID
+	
+	int search_node_seat(int);
+	
+	bool Is_ID_taken(long); // checks the avaliability of ID
+	bool Is_Seat_taken(int); // cheks the avaliability of seat number
 	Node* getHead() { return head; }//inline function to return head(only useful for copy function)
+
 };
 
 #endif
