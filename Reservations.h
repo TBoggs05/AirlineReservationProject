@@ -33,7 +33,7 @@ public:
 private:
 	LinkedList obj1;
 	// declare an object of the linked list class
-	int id;
+	int ID;
 	// stores id for search functions		
 };
 
